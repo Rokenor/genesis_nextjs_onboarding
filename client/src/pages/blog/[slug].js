@@ -1,6 +1,14 @@
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 
+import {
+  Breadcrumbs,
+  Container,
+  Link,
+  Box,
+  Typography,
+} from '@material-ui/core';
+
 export default function BlogArticle({ article }) {
   const router = useRouter();
 
@@ -25,26 +33,38 @@ export default function BlogArticle({ article }) {
         />
         <meta property="og:description" content={article.description} />
       </Head>
-      <div>
-        <div>
-          <a href="/blog">Back to blog</a>
-          <span>
-            Article #{article.id}
-            {article.title}
-          </span>
-        </div>
-        <h3>{article.title}</h3>
-        <img src={article.image} alt={article.title} />
-        {article.content.map((text, index) => {
-          return (
-            <div key={`${text}${index}`}>
-              <p>{text}</p>
-            </div>
-          );
-        })}
-        <p>Author: {article.author}</p>
-        <p>From: {article.author_company}</p>
-      </div>
+
+      <Container maxWidth="md">
+        <main>
+          <Box m={2}>
+            <Breadcrumbs aria-label="breadcrumb">
+              <Link color="inherit" href="/blog">
+                Back to blog
+              </Link>
+              <Typography color="textPrimary">{article.title}</Typography>
+            </Breadcrumbs>
+          </Box>
+          <Typography variant="h3" component="h1" gutterBottom>
+            Article #{article.id} {article.title}
+          </Typography>
+          <img src={article.image} alt={article.title} />
+          {article.content.map((text, index) => {
+            return (
+              <Box pt={2} pb={2} key={`${text}${index}`}>
+                <Typography variant="body1" gutterBottom>
+                  {text}
+                </Typography>
+              </Box>
+            );
+          })}
+          <Typography variant="body2" gutterBottom>
+            Author: {article.author}
+          </Typography>
+          <Typography variant="body2" gutterBottom>
+            From: {article.author_company}
+          </Typography>
+        </main>
+      </Container>
     </>
   );
 }

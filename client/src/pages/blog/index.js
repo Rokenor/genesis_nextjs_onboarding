@@ -1,8 +1,31 @@
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 
+import { makeStyles } from '@material-ui/core/styles';
+import {
+  Box,
+  Card,
+  CardActionArea,
+  CardContent,
+  CardMedia,
+  Container,
+  Grid,
+  Typography,
+} from '@material-ui/core';
+
+const useStyles = makeStyles({
+  root: {
+    maxWidth: 345,
+  },
+  media: {
+    height: 233,
+    width: 350,
+  },
+});
+
 export default function Blog({ articles }) {
   const router = useRouter();
+  const classes = useStyles();
 
   const clickHandler = (url) => {
     router.push(url);
@@ -19,25 +42,51 @@ export default function Blog({ articles }) {
           content="Place for description of page..."
         />
       </Head>
-      <div>
-        <h2>Articles</h2>
-        <div>
-          {articles.map((article, index) => {
-            const url = `/blog/${article.id}`;
-
-            return (
-              <div key={article.id} onClick={() => clickHandler(url)}>
-                <img src={article.image} alt={article.title} />
-                <div>
-                  <p>Article #{article.id}</p>
-                  <h5>{article.title}</h5>
-                  <p>{article.description}</p>
-                </div>
-              </div>
-            );
-          })}
-        </div>
-      </div>
+      <Container maxWidth="md">
+        <Box mt={4}>
+          <Typography variant="h2" gutterBottom>
+            Articles
+          </Typography>
+          <Grid
+            container
+            spacing={2}
+            direction="row"
+            justify="center"
+            alignItems="flex-start"
+          >
+            {articles.map((article, index) => {
+              const url = `/blog/${article.id}`;
+              return (
+                <Grid item xs key={article.id}>
+                  <Card
+                    className={classes.root}
+                    onClick={() => clickHandler(url)}
+                  >
+                    <CardActionArea>
+                      <CardMedia
+                        className={classes.media}
+                        image={article.image}
+                        title={article.title}
+                      />
+                      <CardContent>
+                        <Typography variant="subtitle1" gutterBottom>
+                          Article #{article.id}
+                        </Typography>
+                        <Typography variant="h5" gutterBottom>
+                          {article.title}
+                        </Typography>
+                        <Typography variant="body2" gutterBottom>
+                          {article.description}
+                        </Typography>
+                      </CardContent>
+                    </CardActionArea>
+                  </Card>
+                </Grid>
+              );
+            })}
+          </Grid>
+        </Box>
+      </Container>
     </>
   );
 }
