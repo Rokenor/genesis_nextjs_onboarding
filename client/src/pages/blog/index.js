@@ -1,4 +1,3 @@
-import Head from 'next/head';
 import { useRouter } from 'next/router';
 
 import { makeStyles } from '@material-ui/core/styles';
@@ -33,15 +32,6 @@ export default function Blog({ articles }) {
 
   return (
     <>
-      <Head>
-        <title>NextJS Wokrshop | Blog</title>
-        <link rel="icon" href="/favicon.ico" />
-        <meta property="og:title" content="NextJS Wokrshop | Blog" />
-        <meta
-          property="og:description"
-          content="Place for description of page..."
-        />
-      </Head>
       <Container maxWidth="md">
         <Box mt={4}>
           <Typography variant="h2" gutterBottom>
@@ -100,9 +90,18 @@ export async function getStaticProps() {
     articles.push(value);
   }
 
+  const pageName = 'Blog';
+
+  const meta = {
+    title: 'NextJS Wokrshop | Blog',
+    description: 'Place for description of page...',
+  };
+
   return {
     props: {
       articles,
+      pageName,
+      meta,
     },
     revalidate: 60,
   };

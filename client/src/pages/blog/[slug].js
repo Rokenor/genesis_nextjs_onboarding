@@ -1,4 +1,3 @@
-import Head from 'next/head';
 import { useRouter } from 'next/router';
 
 import {
@@ -22,18 +21,6 @@ export default function BlogArticle({ article }) {
 
   return (
     <>
-      <Head>
-        <title>
-          Blog | #{article.id} {article.title}
-        </title>
-        <link rel="icon" href="/favicon.ico" />
-        <meta
-          property="og:title"
-          content={`Blog | #${article.id} ${article.title}`}
-        />
-        <meta property="og:description" content={article.description} />
-      </Head>
-
       <Container maxWidth="md">
         <main>
           <Box m={2}>
@@ -73,9 +60,18 @@ export async function getStaticProps({ params }) {
   const res = await fetch(`http://localhost:8081/article/${params.slug}`);
   const article = await res.json();
 
+  const pageName = `Blog | Article ${article.id}`;
+
+  const meta = {
+    title: `Blog | #${article.id} ${article.title}`,
+    description: article.description,
+  };
+
   return {
     props: {
       article,
+      pageName,
+      meta,
     },
     revalidate: 60,
   };

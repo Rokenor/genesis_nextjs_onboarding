@@ -1,6 +1,8 @@
 import Head from 'next/head';
 import { useEffect } from 'react';
 
+import Header from '../components/Header';
+
 import { ThemeProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import theme from '../theme';
@@ -14,17 +16,25 @@ function MyApp({ Component, pageProps }) {
     }
   }, []);
 
+  const metaTitle =
+    (pageProps.meta && pageProps.meta.title) || 'NextJS Onboarding';
+  const metaDescription = (pageProps.meta && pageProps.meta.title) || '';
+
   return (
     <>
       <Head>
-        <title>NextJS Wokrshop | HomePage</title>
+        <title>{metaTitle}</title>
+        <link rel="icon" href="/favicon.ico" />
         <meta
           name="viewport"
           content="minimum-scale=1, initial-scale=1, width=device-width"
         />
+        <meta property="og:title" content={metaTitle} />
+        <meta property="og:description" content={metaDescription} />
       </Head>
       <ThemeProvider theme={theme}>
         <CssBaseline />
+        <Header pageName={pageProps.pageName} />
         <Component {...pageProps} />
       </ThemeProvider>
     </>
