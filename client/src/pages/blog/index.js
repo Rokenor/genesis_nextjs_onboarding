@@ -1,6 +1,13 @@
 import Head from 'next/head';
+import { useRouter } from 'next/router';
 
 export default function Blog({ articles }) {
+  const router = useRouter();
+
+  const clickHandler = (url) => {
+    router.push(url);
+  };
+
   return (
     <>
       <Head>
@@ -16,8 +23,10 @@ export default function Blog({ articles }) {
         <h2>Articles</h2>
         <div>
           {articles.map((article, index) => {
+            const url = `/blog/${article.id}`;
+
             return (
-              <div key={article.id}>
+              <div key={article.id} onClick={() => clickHandler(url)}>
                 <img src={article.image} alt={article.title} />
                 <div>
                   <p>Article #{article.id}</p>
