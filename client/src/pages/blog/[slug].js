@@ -50,7 +50,7 @@ export default function BlogArticle({ article }) {
 }
 
 export async function getStaticProps({ params }) {
-  const res = await fetch(`http://localhost:8081/article/${params.slug}`);
+  const res = await fetch(`http://localhost:8085/article/${params.slug}`);
   const article = await res.json();
 
   return {
@@ -62,7 +62,7 @@ export async function getStaticProps({ params }) {
 }
 
 export async function getStaticPaths() {
-  const res = await fetch('http://localhost:8081/articles');
+  const res = await fetch('http://localhost:8085/articles');
   const posts = await res.json();
 
   const articles = [];
