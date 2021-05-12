@@ -34,7 +34,7 @@ export default function Blog({ articles }) {
 }
 
 export async function getStaticProps() {
-  const res = await fetch('http://localhost:8081/articles');
+  const res = await fetch('http://localhost:8085/articles');
   const posts = await res.json();
 
   const articles = [];
